@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  github-dashboard:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+    env_file:
+      - .env
+    volumes:
+      - ./public:/app/public
