@@ -1,0 +1,9 @@
+{
+  "name": "node-demo-app",
+  "version": "1.0.0",
+  "description": "Simple Node.js app for monitoring demo",
+  "main": "server.js",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "broken-demo-app",
+  "version": "1.0.0",
+  "description": "App that crashes randomly for monitoring demo",
+  "main": "broken-server.js",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

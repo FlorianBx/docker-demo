@@ -1,0 +1,60 @@
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    volumes:
+      - uptime-kuma:/app/data
+    ports:
+      - "3001:3001"
+    restart: always
+    networks:
+      - monitoring
+
+  node-app:
+    build: ./demo-apps/app1
+    container_name: node-app
+    ports:
+      - "3000:3000"
+    restart: always
+    networks:
+      - monitoring
+
+  python-api:
+    build: ./demo-apps/app2
+    container_name: python-api
+    ports:
+      - "5000:5000"
+    restart: always
+    networks:
+      - monitoring
+
+  broken-app:
+    build: ./demo-apps/broken-app
+    container_name: broken-app
+    ports:
+      - "8080:8080"
+    restart: always
+    networks:
+      - monitoring
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: monitoring-postgres
+    environment:
+      POSTGRES_DB: monitoring_db
+      POSTGRES_USER: monitor
+      POSTGRES_PASSWORD: monitor123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - monitoring
+
+volumes:
+  uptime-kuma:
+  postgres_data:
+
+networks:
+  monitoring:
+    driver: bridge
