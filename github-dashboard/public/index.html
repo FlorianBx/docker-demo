@@ -59,7 +59,7 @@
     <section>
       <h2>📚 Monitored Repositories</h2>
       <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1rem;">
-        <template x-for="repo in repositories" :key="repo.full_name">
+        <template x-for="(repo, index) in repositories" :key="index">
           <article>
             <header>
               <strong x-text="repo.name"></strong>
@@ -89,7 +89,15 @@
         },
         repos: [
           // 'DonkeySchool/Andreane',
-          'FlorianBx/nvim_config'
+          'FlorianBx/nvim_config',
+          'FlorianBx/weba11ylab',
+          'FlorianBx/Rise-of-Knowledges',
+          'FlorianBx/my-little-starter',
+          'FlorianBx/ng-croissant',
+          'FlorianBx/pres_html',
+          'FlorianBx/pres_js_v2',
+          'FlorianBx/presTypescript',
+          'FlorianBx/presAngular'
         ],
 
         async fetchData() {
