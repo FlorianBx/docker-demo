@@ -1,0 +1,72 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Démo Symfony + PostgreSQL{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>🚀 Démo Symfony + PostgreSQL</h1>
+    
+    <p>Félicitations ! Votre environnement de développement Symfony avec PostgreSQL fonctionne parfaitement.</p>
+    
+    <h2>Test de la base de données</h2>
+    <p>Utilisez les boutons ci-dessous pour tester l'intégration avec PostgreSQL :</p>
+    
+    <button class="btn" onclick="createUser()">Créer un utilisateur</button>
+    <button class="btn" onclick="loadUsers()">Charger les utilisateurs</button>
+    
+    <div id="users" class="users"></div>
+    
+    <h2>Services disponibles</h2>
+    <ul>
+        <li><strong>Application Symfony</strong> : <a href="/">http://localhost</a></li>
+        <li><strong>Adminer (PostgreSQL)</strong> : <a href="http://localhost:8080" target="_blank">http://localhost:8080</a></li>
+        <li><strong>PostgreSQL</strong> : localhost:5432 (symfony/symfony/symfony_db)</li>
+    </ul>
+    
+    <h2>Que contient cet environnement</h2>
+    <p>Cet environnement est prêt pour :</p>
+    <ul>
+        <li>Les concepts MVC avec Symfony</li>
+        <li>L'ORM Doctrine et PostgreSQL</li>
+        <li>Les APIs REST</li>
+        <li>Docker et containerisation</li>
+    </ul>
+</div>
+
+<script>
+async function createUser() {
+    try {
+        const response = await fetch('/api/users/create', { method: 'POST' });
+        const data = await response.json();
+        loadUsers();
+    } catch (error) {
+        alert('❌ Erreur : ' + error.message);
+    }
+}
+
+async function loadUsers() {
+    try {
+        const response = await fetch('/api/users');
+        const users = await response.json();
+        
+        const usersDiv = document.getElementById('users');
+        if (users.length === 0) {
+            usersDiv.innerHTML = '<p>Aucun utilisateur trouvé. Créez-en un !</p>';
+        } else {
+            usersDiv.innerHTML = '<h3>Utilisateurs en base :</h3>' + 
+                users.map(user => `
+                    <div class="user">
+                        <strong>${user.name}</strong><br>
+                        📧 ${user.email}<br>
+                        📅 Créé le : ${user.createdAt}
+                    </div>
+                `).join('');
+        }
+    } catch (error) {
+        document.getElementById('users').innerHTML = '❌ Erreur lors du chargement : ' + error.message;
+    }
+}
+
+document.addEventListener('DOMContentLoaded', loadUsers);
+</script>
+{% endblock %}
